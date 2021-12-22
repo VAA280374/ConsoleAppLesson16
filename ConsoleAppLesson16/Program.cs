@@ -12,7 +12,8 @@ namespace ConsoleAppLesson16
     {
         static void Main(string[] args)
         {
-            const int count = 5;
+            // Создание массива товаров
+            const int count = 2; // Установка размера массива товаров.
             Product[] products = new Product[count];
             for (int i = 0; i < count; i++ )
             { 
@@ -27,33 +28,32 @@ namespace ConsoleAppLesson16
                 Console.WriteLine(" ");
             }
 
-            JsonSerializerOptions options = new JsonSerializerOptions();
+            // Сериализаци\ массива товаров в Json-строку
+            JsonSerializerOptions options = new JsonSerializerOptions()
             {
-                Encoder = JavaScriptEncoder.Create(UnicodeRange.Basiclatin)
-                
-                ;
-            }
-
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic)
+            };
             string jsonProductsString = JsonSerializer.Serialize(products, options);
-            Console.WriteLine(jsonProductsString);
+            // Console.WriteLine("В файл записана строка : {0} ", jsonProductsString);
 
-
-            string path = "__log.txt";
+            // Подготовка файла, если его нет.
+            string path = "Products.txt";
             if (!File.Exists(path))
             {
                 Console.WriteLine("Файл {0} создан заново", path);
                 FileStream fs = File.Create(path);
                 fs.Close();
             }
+
+            // Запись Json-строки в файл, с "затиранием" предыдущей информации.
             using (StreamWriter sw = new StreamWriter(path, false))
             {
-                sw.Write(""); // очистка файла
-                Console.WriteLine("Файл {0} очищен", path);
+                sw.Write(jsonProductsString); 
+                // Console.WriteLine("Файл {0} очищен", path);
             }
-
+            Console.WriteLine("В файл записана строка : {0} ", jsonProductsString);
 
             Console.ReadKey();
-
         }
     }
     class Product
