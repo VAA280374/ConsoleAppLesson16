@@ -13,7 +13,7 @@ namespace ConsoleAppLesson16
         static void Main(string[] args)
         {
             // Создание массива товаров
-            const int count = 2; // Установка размера массива товаров.
+            const int count = 5; // Установка размера массива товаров.
             Product[] products = new Product[count];
             for (int i = 0; i < count; i++ )
             { 
